@@ -1,0 +1,16 @@
+---
+title: "Example Website"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+This is markdown
+
+  * I can include bullets
+  
+## I can include headers
+
+![Ember and Jules](img/EnJ.jpg)

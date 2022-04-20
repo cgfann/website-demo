@@ -1,0 +1,41 @@
+---
+title: "analysis"
+---
+
+```{r message = FALSE}
+library(tidyverse)
+library(causaldata)
+library(ggdag)
+library(broom)
+library(rsample)
+library(visdat)
+library(mice)
+set.seed(3)
+```
+
+```{r}
+df = nhefs
+codebook = nhefs_codebook
+```
+
+Causal question: Did United States 25 to 74 year-olds who quit smoking between 1971 and 1982 gain more weight in that time frame than those who did not quit smoking?  
+We are interested in the causal effect of quitting smoking on weight change from 1971 to 1982. In other words, the difference in weight change between those who quit smoking and those who did not.  
+
+
+A proposed DAG
+```{r}
+dagify(
+  qsmk ~ covariates,
+  wt82_71 ~ covariates,
+  exposure = "qsmk",
+  outcome = "wt82_71"
+) %>%
+  ggdag(text_size = 2)
+```
+
+Appropriate handling of any missing data
+```{r}
+df_uc = df %>%
+  filter(censored == 0)
+vis_dat(df_uc)
+```
